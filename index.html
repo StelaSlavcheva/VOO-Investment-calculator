@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Personal Loan & VOO Investment Calculator</title>
+    <meta name="title" content="Personal Loan & VOO Investment Calculator">
+    <meta name="description" content="Calculate your personal loan EMI and compare investment returns in VOO ETF. Make informed financial decisions with our comprehensive loan calculator.">
+    <meta name="keywords" content="loan calculator, EMI calculator, VOO investment, personal finance, investment comparison, loan interest, compound interest">
+    <meta name="author" content="MiniMax Agent">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://loan-voo-calculator.com/">
+    <meta property="og:title" content="Personal Loan & VOO Investment Calculator">
+    <meta property="og:description" content="Calculate your personal loan EMI and compare investment returns in VOO ETF. Make informed financial decisions with our comprehensive loan calculator.">
+    <meta property="og:image" content="https://loan-voo-calculator.com/icons/icon-512x512.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://loan-voo-calculator.com/">
+    <meta property="twitter:title" content="Personal Loan & VOO Investment Calculator">
+    <meta property="twitter:description" content="Calculate your personal loan EMI and compare investment returns in VOO ETF. Make informed financial decisions with our comprehensive loan calculator.">
+    <meta property="twitter:image" content="https://loan-voo-calculator.com/icons/icon-512x512.png">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#3B82F6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="LoanVOO Calc">
+    <meta name="msapplication-TileColor" content="#3B82F6">
+    <meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#3B82F6">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <h1 class="main-title">Personal Loan & VOO Investment Calculator</h1>
+            <p class="subtitle">Calculate your monthly EMI and compare investment returns in VOO ETF</p>
+        </header>
+
+        <main class="calculator-container">
+            <div class="calculator-card">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <h2 class="section-title">Loan Details</h2>
+                    
+                    <div class="input-grid">
+                        <!-- Loan Amount -->
+                        <div class="input-group compact">
+                            <label for="loan-amount" class="input-label">Loan Amount</label>
+                            <div class="input-container">
+                                <span class="currency">$</span>
+                                <input 
+                                    type="number" 
+                                    id="loan-amount" 
+                                    class="text-input" 
+                                    placeholder="30000" 
+                                    min="1000" 
+                                    max="1000000" 
+                                    step="500"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Interest Rate -->
+                        <div class="input-group compact">
+                            <label for="interest-rate" class="input-label">Interest Rate (%)</label>
+                            <div class="input-container">
+                                <input 
+                                    type="number" 
+                                    id="interest-rate" 
+                                    class="text-input" 
+                                    placeholder="3" 
+                                    min="1" 
+                                    max="30" 
+                                    step="0.1"
+                                >
+                                <span class="percentage">%</span>
+                            </div>
+                        </div>
+
+                        <!-- Loan Tenure -->
+                        <div class="input-group compact">
+                            <label for="loan-tenure" class="input-label">Tenure (Years)</label>
+                            <div class="input-container">
+                                <input 
+                                    type="number" 
+                                    id="loan-tenure" 
+                                    class="text-input" 
+                                    placeholder="10" 
+                                    min="1" 
+                                    max="30" 
+                                    step="0.5"
+                                >
+                                <span class="unit">years</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Results Section -->
+                <div class="results-section compact">
+                    <h2 class="section-title">Calculation Results</h2>
+                    
+                    <div class="results-grid">
+                        <div class="result-item primary">
+                            <div class="result-label">Monthly EMI</div>
+                            <div class="result-value emi tooltip-trigger" data-tooltip="Equated Monthly Installment - The fixed amount you pay to the lender every month until your loan is fully repaid." id="emi-amount">$0</div>
+                        </div>
+
+                        <div class="result-item">
+                            <div class="result-label">Total Interest</div>
+                            <div class="result-value tooltip-trigger" data-tooltip="The total amount of interest you will pay over the entire loan period." id="total-interest">$0</div>
+                        </div>
+
+                        <div class="result-item">
+                            <div class="result-label">Total Payable</div>
+                            <div class="result-value tooltip-trigger" data-tooltip="The complete amount you will pay back, including both the original loan amount and all interest charges." id="total-amount">$0</div>
+                        </div>
+
+                        <div class="result-item compact-info">
+                            <div class="compact-details">
+                                <div class="detail-item">
+                                    <span class="info-label">Principal:</span>
+                                    <span class="info-value tooltip-trigger" data-tooltip="The original loan amount you borrowed from the lender." id="principal-amount">$0</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="info-label">Tenure:</span>
+                                    <span class="info-value" id="loan-tenure-display">0 years</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VOO Investment Calculator Section -->
+                <div class="divider"></div>
+                <div class="investment-section">
+                    <h2 class="section-title">VOO Investment Comparison</h2>
+                    <p class="investment-description">What if you invested the loan amount in VOO ETF instead?</p>
+                    
+                    <!-- Help and Calculation Toggle -->
+                    <div class="help-toggle-container">
+                        <button type="button" class="toggle-btn" id="toggle-help">
+                            <span class="toggle-icon">📚</span>
+                            <span class="toggle-text">Help & Terms Dictionary</span>
+                        </button>
+                        <button type="button" class="toggle-btn" id="toggle-calculations">
+                            <span class="toggle-icon">📊</span>
+                            <span class="toggle-text">Show Detailed Calculations</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Help and Terms Dictionary -->
+                    <div class="help-section" id="help-section" style="display: none;">
+                        <h3 class="help-title">📚 Financial Terms & Calculations Guide</h3>
+                        
+                        <div class="help-tabs">
+                            <button type="button" class="help-tab active" data-tab="terms">Terms</button>
+                            <button type="button" class="help-tab" data-tab="calculations">Calculations</button>
+                            <button type="button" class="help-tab" data-tab="examples">Examples</button>
+                        </div>
+                        
+                        <div class="help-content">
+                            <!-- Terms Tab -->
+                            <div class="help-tab-content active" id="terms-tab">
+                                <div class="terms-grid">
+                                    <div class="term-card">
+                                        <h4 class="term-name">EMI (Equated Monthly Installment)</h4>
+                                        <p class="term-definition">The fixed amount you pay to the lender every month until your loan is fully repaid.</p>
+                                        <p class="term-formula">EMI = [P × r × (1+r)^n] / [(1+r)^n - 1]</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Principal Amount</h4>
+                                        <p class="term-definition">The original loan amount you borrow from the lender, before any interest is added.</p>
+                                        <p class="term-example">Example: If you borrow $25,000, that's your principal amount.</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Interest Rate</h4>
+                                        <p class="term-definition">The percentage charged by the lender on the outstanding loan amount, usually expressed as annual percentage rate (APR).</p>
+                                        <p class="term-example">Example: 12.5% annual rate means you pay 12.5% of the remaining balance each year.</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Loan Tenure</h4>
+                                        <p class="term-definition">The duration over which you will repay the loan, typically measured in years.</p>
+                                        <p class="term-example">Example: 5-year tenure = 60 monthly payments.</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Total Interest</h4>
+                                        <p class="term-definition">The total amount of interest you will pay over the entire loan period.</p>
+                                        <p class="term-formula">Total Interest = (EMI × tenure in months) - Principal Amount</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Total Amount</h4>
+                                        <p class="term-definition">The complete amount you will pay back, including both principal and interest.</p>
+                                        <p class="term-formula">Total Amount = Principal Amount + Total Interest</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">VOO ETF</h4>
+                                        <p class="term-definition">Vanguard S&P 500 ETF - A fund that tracks the performance of the S&P 500 index, representing 500 of the largest US companies.</p>
+                                        <p class="term-example">Example: Companies like Apple, Microsoft, Google are included in VOO.</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Compound Interest</h4>
+                                        <p class="term-definition">Interest calculated on both the initial principal and the accumulated interest from previous periods.</p>
+                                        <p class="term-formula">Future Value = Principal × (1 + rate)^time</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Investment Profit</h4>
+                                        <p class="term-definition">The gain or loss from an investment, calculated as the difference between final value and initial investment.</p>
+                                        <p class="term-formula">Profit = Investment Value - Principal Investment</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Net Profit (After Loan Costs)</h4>
+                                        <p class="term-definition">Investment profit minus the total interest cost of the loan used to fund the investment.</p>
+                                        <p class="term-formula">Net Profit = Investment Profit - Total Loan Interest</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Cash Flow</h4>
+                                        <p class="term-definition">The net amount of money moving in and out of your finances each month.</p>
+                                        <p class="term-formula">Cash Flow = Monthly Investment Profit - Monthly Loan Payment</p>
+                                    </div>
+                                    
+                                    <div class="term-card">
+                                        <h4 class="term-name">Risk Scenarios</h4>
+                                        <p class="term-definition">Different investment return assumptions based on historical performance and market conditions.</p>
+                                        <ul class="term-list">
+                                            <li><strong>Conservative (7%):</strong> Lower expected returns, lower risk</li>
+                                            <li><strong>Historical Average (10%):</strong> Based on VOO's long-term performance</li>
+                                            <li><strong>Optimistic (15%):</strong> Higher expected returns, higher risk</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Calculations Tab -->
+                            <div class="help-tab-content" id="calculations-tab">
+                                <div class="calculation-guide">
+                                    <h4>🔢 How We Calculate Everything</h4>
+                                    
+                                    <div class="calc-guide-section">
+                                        <h5>1. EMI Calculation (Loan Payment)</h5>
+                                        <div class="calc-explanation">
+                                            <p>We use the standard EMI formula used by banks and financial institutions:</p>
+                                            <div class="formula-display">
+                                                EMI = [P × r × (1+r)^n] / [(1+r)^n - 1]
+                                            </div>
+                                            <div class="formula-breakdown">
+                                                <p><strong>Where:</strong></p>
+                                                <ul>
+                                                    <li>P = Principal Amount (loan amount)</li>
+                                                    <li>r = Monthly Interest Rate (annual rate ÷ 12 ÷ 100)</li>
+                                                    <li>n = Number of months (tenure in years × 12)</li>
+                                                </ul>
+                                            </div>
+                                            <div class="calc-example">
+                                                <p><strong>Example:</strong> $30,000 loan at 3% for 10 years</p>
+                                                <ul>
+                                                    <li>P = $30,000</li>
+                                                    <li>r = 3% ÷ 12 ÷ 100 = 0.0025</li>
+                                                    <li>n = 10 × 12 = 120 months</li>
+                                                    <li>EMI = $289.85 per month</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-guide-section">
+                                        <h5>2. Investment Future Value</h5>
+                                        <div class="calc-explanation">
+                                            <p>We calculate how much your investment will grow using compound interest:</p>
+                                            <div class="formula-display">
+                                                Future Value = Principal × (1 + annual_rate)^years
+                                            </div>
+                                            <div class="calc-example">
+                                                <p><strong>Example:</strong> $30,000 invested at 10% for 10 years</p>
+                                                <ul>
+                                                    <li>Future Value = $30,000 × (1.10)^10</li>
+                                                    <li>Future Value = $30,000 × 2.59374</li>
+                                                    <li>Future Value = $77,812.20</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-guide-section">
+                                        <h5>3. Monthly Investment Profit</h5>
+                                        <div class="calc-explanation">
+                                            <p>Estimated monthly profit from your investment:</p>
+                                            <div class="formula-display">
+                                                Monthly Profit = Principal × (annual_rate ÷ 12)
+                                            </div>
+                                            <div class="calc-example">
+                                                <p><strong>Example:</strong> $30,000 at 10% annual rate</p>
+                                                <ul>
+                                                    <li>Monthly Profit = $30,000 × (0.10 ÷ 12)</li>
+                                                    <li>Monthly Profit = $250.00 per month</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-guide-section">
+                                        <h5>4. Net Profit After Loan Costs</h5>
+                                        <div class="calc-explanation">
+                                            <p>The most important metric - your actual profit after paying loan interest:</p>
+                                            <div class="formula-display">
+                                                Net Profit = Investment Profit - Total Loan Interest
+                                            </div>
+                                            <div class="calc-example">
+                                                <p><strong>Example:</strong> Investment vs Loan comparison</p>
+                                                <ul>
+                                                    <li>Investment Profit: $47,812.20</li>
+                                                    <li>Total Loan Interest: $4,782.00</li>
+                                                    <li>Net Profit: $43,030.20 (Profit)</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Examples Tab -->
+                            <div class="help-tab-content" id="examples-tab">
+                                <div class="examples-guide">
+                                    <h4>💡 Real-World Examples</h4>
+                                    
+                                    <div class="example-card">
+                                        <h5>Example 1: Small Loan ($10,000 at 8% for 3 years)</h5>
+                                        <div class="example-details">
+                                            <div class="example-calc">
+                                                <strong>Loan Details:</strong>
+                                                <ul>
+                                                    <li>Principal: $10,000</li>
+                                                    <li>Interest Rate: 8%</li>
+                                                    <li>Tenure: 3 years</li>
+                                                    <li>Monthly EMI: $313</li>
+                                                    <li>Total Interest: $1,268</li>
+                                                </ul>
+                                            </div>
+                                            <div class="example-calc">
+                                                <strong>Investment (10% historical average):</strong>
+                                                <ul>
+                                                    <li>Investment Value: $13,310</li>
+                                                    <li>Investment Profit: $3,310</li>
+                                                    <li>Net After Loan Costs: $2,042</li>
+                                                    <li>Monthly Cash Flow: $73 loss</li>
+                                                </ul>
+                                            </div>
+                                            <div class="example-result positive">
+                                                ✅ <strong>Result:</strong> Profitable investment after loan costs
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="example-card">
+                                        <h5>Example 2: Large Loan ($100,000 at 15% for 10 years)</h5>
+                                        <div class="example-details">
+                                            <div class="example-calc">
+                                                <strong>Loan Details:</strong>
+                                                <ul>
+                                                    <li>Principal: $100,000</li>
+                                                    <li>Interest Rate: 15%</li>
+                                                    <li>Tenure: 10 years</li>
+                                                    <li>Monthly EMI: $1,611</li>
+                                                    <li>Total Interest: $93,297</li>
+                                                </ul>
+                                            </div>
+                                            <div class="example-calc">
+                                                <strong>Investment (10% historical average):</strong>
+                                                <ul>
+                                                    <li>Investment Value: $259,374</li>
+                                                    <li>Investment Profit: $159,374</li>
+                                                    <li>Net After Loan Costs: $66,077</li>
+                                                    <li>Monthly Cash Flow: $7,016 income</li>
+                                                </ul>
+                                            </div>
+                                            <div class="example-result positive">
+                                                ✅ <strong>Result:</strong> Excellent long-term investment
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="example-card">
+                                        <h5>Example 3: Risky Loan ($50,000 at 20% for 7 years)</h5>
+                                        <div class="example-details">
+                                            <div class="example-calc">
+                                                <strong>Loan Details:</strong>
+                                                <ul>
+                                                    <li>Principal: $50,000</li>
+                                                    <li>Interest Rate: 20%</li>
+                                                    <li>Tenure: 7 years</li>
+                                                    <li>Monthly EMI: $1,173</li>
+                                                    <li>Total Interest: $48,512</li>
+                                                </ul>
+                                            </div>
+                                            <div class="example-calc">
+                                                <strong>Investment (Optimistic 15%):</strong>
+                                                <ul>
+                                                    <li>Investment Value: $136,260</li>
+                                                    <li>Investment Profit: $86,260</li>
+                                                    <li>Net After Loan Costs: $37,748</li>
+                                                    <li>Monthly Cash Flow: $1,127 income</li>
+                                                </ul>
+                                            </div>
+                                            <div class="example-result positive">
+                                                ✅ <strong>Result:</strong> Profitable despite high interest rate
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="disclaimer-box">
+                                        <h5>⚠️ Important Disclaimers</h5>
+                                        <ul>
+                                            <li><strong>Past Performance:</strong> Historical returns don't guarantee future performance</li>
+                                            <li><strong>Market Risk:</strong> Investment values can go up and down significantly</li>
+                                            <li><strong>Fixed vs Variable:</strong> Loan interest is typically fixed, investment returns are not</li>
+                                            <li><strong>Tax Considerations:</strong> This calculator doesn't account for taxes on investment gains or loan interest deductions</li>
+                                            <li><strong>Professional Advice:</strong> Consult with financial advisors for personalized advice</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- VOO Investment Results -->
+                    <div class="investment-results">
+                        <div class="investment-scenarios">
+                            <div class="scenario-card conservative">
+                                <div class="scenario-header">
+                                    <h3>Conservative (7% annual)</h3>
+                                    <div class="scenario-label">Lower Risk</div>
+                                </div>
+                                <div class="scenario-content">
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Invested Amount:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The amount you would invest in VOO ETF, which is the same as your loan principal amount." id="conservative-invested">$0</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Investment Period:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The duration of the investment, which matches your loan tenure. This is how long your money would be invested in VOO ETF." id="conservative-period">0 years</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Total Profit:</span>
+                                        <span class="metric-value profit tooltip-trigger" data-tooltip="The gross profit from your VOO investment: Investment Value - Original Investment Amount. This is your profit before accounting for loan costs." id="conservative-profit">$0</span>
+                                        <button type="button" class="calc-detail-btn" data-scenario="conservative" title="Show detailed calculation">
+                                            <span class="calc-icon">🔍</span>
+                                        </button>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Loan Interest:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The total amount of interest you will pay on your loan. This is the same for all investment scenarios as it depends only on your loan terms." id="conservative-loan-interest">$0</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Net Profit:</span>
+                                        <span class="metric-value difference tooltip-trigger" data-tooltip="Net profit after paying all loan interest: Total Investment Profit - Loan Interest. Green = profit, Red = loss." id="conservative-net">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scenario-card historical">
+                                <div class="scenario-header">
+                                    <h3>Historical Average (10% annual)</h3>
+                                    <div class="scenario-label">Medium Risk</div>
+                                </div>
+                                <div class="scenario-content">
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Invested Amount:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The amount you would invest in VOO ETF, which is the same as your loan principal amount." id="historical-invested">$0</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Investment Period:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The duration of the investment, which matches your loan tenure. This is how long your money would be invested in VOO ETF." id="historical-period">0 years</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Total Profit:</span>
+                                        <span class="metric-value profit tooltip-trigger" data-tooltip="The gross profit from your VOO investment: Investment Value - Original Investment Amount. This is your profit before accounting for loan costs." id="historical-profit">$0</span>
+                                        <button type="button" class="calc-detail-btn" data-scenario="historical" title="Show detailed calculation">
+                                            <span class="calc-icon">🔍</span>
+                                        </button>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Loan Interest:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The total amount of interest you will pay on your loan. This is the same for all investment scenarios as it depends only on your loan terms." id="historical-loan-interest">$0</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Net Profit:</span>
+                                        <span class="metric-value difference tooltip-trigger" data-tooltip="Net profit after paying all loan interest: Total Investment Profit - Loan Interest. Green = profit, Red = loss." id="historical-net">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scenario-card optimistic">
+                                <div class="scenario-header">
+                                    <h3>Optimistic (15% annual)</h3>
+                                    <div class="scenario-label">Higher Risk</div>
+                                </div>
+                                <div class="scenario-content">
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Invested Amount:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The amount you would invest in VOO ETF, which is the same as your loan principal amount." id="optimistic-invested">$0</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Investment Period:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The duration of the investment, which matches your loan tenure. This is how long your money would be invested in VOO ETF." id="optimistic-period">0 years</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Total Profit:</span>
+                                        <span class="metric-value profit tooltip-trigger" data-tooltip="The gross profit from your VOO investment: Investment Value - Original Investment Amount. This is your profit before accounting for loan costs." id="optimistic-profit">$0</span>
+                                        <button type="button" class="calc-detail-btn" data-scenario="optimistic" title="Show detailed calculation">
+                                            <span class="calc-icon">🔍</span>
+                                        </button>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Loan Interest:</span>
+                                        <span class="metric-value tooltip-trigger" data-tooltip="The total amount of interest you will pay on your loan. This is the same for all investment scenarios as it depends only on your loan terms." id="optimistic-loan-interest">$0</span>
+                                    </div>
+                                    <div class="scenario-metric">
+                                        <span class="metric-label">Net Profit:</span>
+                                        <span class="metric-value difference tooltip-trigger" data-tooltip="Net profit after paying all loan interest: Total Investment Profit - Loan Interest. Green = profit, Red = loss." id="optimistic-net">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Cash Flow Comparison -->
+                    <div class="monthly-comparison">
+                        <h3 class="comparison-title">Monthly Cash Flow Comparison</h3>
+                        <p class="comparison-description">Compare your monthly loan payment with potential monthly investment profits</p>
+                        
+                        <div class="monthly-flow">
+                            <div class="flow-item loan-payment">
+                                <div class="flow-header">
+                                    <span class="flow-label">Monthly EMI (Loan Payment)</span>
+                                    <span class="flow-icon loan-icon">💳</span>
+                                </div>
+                                <div class="flow-amount tooltip-trigger" data-tooltip="Your fixed monthly loan payment to the lender. This amount stays the same every month until the loan is fully paid off." id="monthly-emi">$0</div>
+                            </div>
+                            
+                            <div class="flow-item investment-profit">
+                                <div class="flow-header">
+                                    <span class="flow-label">Monthly Investment Profit (Historical Average)</span>
+                                    <span class="flow-icon profit-icon">📈</span>
+                                </div>
+                                <div class="flow-amount tooltip-trigger" data-tooltip="Estimated monthly profit from investing the loan amount in VOO ETF at historical average rate (10%). This is just the profit portion, not total investment value." id="monthly-investment-profit">$0</div>
+                            </div>
+                            
+                            <div class="flow-item net-cash-flow">
+                                <div class="flow-header">
+                                    <span class="flow-label">Net Monthly Cash Flow</span>
+                                    <span class="flow-icon net-icon">💰</span>
+                                </div>
+                                <div class="flow-amount tooltip-trigger" data-tooltip="The net cash flow each month: Monthly Investment Profit - Monthly Loan Payment. Positive means you're earning more than you owe, negative means you're paying more than you earn." id="net-monthly-flow">$0</div>
+                                <div class="flow-note" id="flow-note">Monthly profit after loan payment</div>
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-comparison">
+                            <h4>All Scenarios Monthly Comparison</h4>
+                            <div class="scenario-flows">
+                                <div class="scenario-flow conservative-flow">
+                                    <span class="scenario-name">Conservative (7%)</span>
+                                    <span class="scenario-monthly tooltip-trigger" data-tooltip="Monthly net cash flow for this scenario: Monthly Investment Profit - Monthly Loan Payment. This shows your actual cash flow impact." id="conservative-monthly">$0</span>
+                                </div>
+                                <div class="scenario-flow historical-flow">
+                                    <span class="scenario-name">Historical (10%)</span>
+                                    <span class="scenario-monthly tooltip-trigger" data-tooltip="Monthly net cash flow for this scenario: Monthly Investment Profit - Monthly Loan Payment. This shows your actual cash flow impact." id="historical-monthly">$0</span>
+                                </div>
+                                <div class="scenario-flow optimistic-flow">
+                                    <span class="scenario-name">Optimistic (15%)</span>
+                                    <span class="scenario-monthly tooltip-trigger" data-tooltip="Monthly net cash flow for this scenario: Monthly Investment Profit - Monthly Loan Payment. This shows your actual cash flow impact." id="optimistic-monthly">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Calculations Section -->
+                    <div class="detailed-calculations" id="detailed-calculations" style="display: none;">
+                        <h3 class="calculations-title">📈 Detailed Investment Calculations</h3>
+                        
+                        <div class="calculation-inputs">
+                            <h4>Input Parameters</h4>
+                            <div class="input-breakdown">
+                                <div class="input-item">
+                                    <span class="input-label">Principal Amount:</span>
+                                    <span class="input-value" id="detail-principal">$0</span>
+                                </div>
+                                <div class="input-item">
+                                    <span class="input-label">Loan Tenure:</span>
+                                    <span class="input-value" id="detail-tenure">0 years</span>
+                                </div>
+                                <div class="input-item">
+                                    <span class="input-label">Total Loan Interest:</span>
+                                    <span class="input-value" id="detail-loan-interest">$0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="calculation-steps">
+                            <h4>Investment Calculation Steps</h4>
+                            
+                            <!-- Conservative Scenario -->
+                            <div class="scenario-calculation conservative-calc">
+                                <div class="calc-header">
+                                    <span class="calc-scenario-name">Conservative Scenario (7% Annual)</span>
+                                </div>
+                                <div class="calc-steps">
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 1: Monthly Rate</span>
+                                        <span class="step-formula">7% ÷ 12 = 0.5833%</span>
+                                        <span class="step-value" id="conservative-monthly-rate">0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 2: Future Value</span>
+                                        <span class="step-formula">$0 × (1.005833)^60</span>
+                                        <span class="step-value" id="conservative-future-value">$0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 3: Total Profit</span>
+                                        <span class="step-formula">$0 - $0</span>
+                                        <span class="step-value" id="conservative-total-profit">$0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 4: Net After Loan Costs</span>
+                                        <span class="step-formula">$0 - $0</span>
+                                        <span class="step-value" id="conservative-net-profit">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Historical Average Scenario -->
+                            <div class="scenario-calculation historical-calc">
+                                <div class="calc-header">
+                                    <span class="calc-scenario-name">Historical Average Scenario (10% Annual)</span>
+                                </div>
+                                <div class="calc-steps">
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 1: Monthly Rate</span>
+                                        <span class="step-formula">10% ÷ 12 = 0.8333%</span>
+                                        <span class="step-value" id="historical-monthly-rate">0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 2: Future Value</span>
+                                        <span class="step-formula">$0 × (1.008333)^60</span>
+                                        <span class="step-value" id="historical-future-value">$0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 3: Total Profit</span>
+                                        <span class="step-formula">$0 - $0</span>
+                                        <span class="step-value" id="historical-total-profit">$0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 4: Net After Loan Costs</span>
+                                        <span class="step-formula">$0 - $0</span>
+                                        <span class="step-value" id="historical-net-profit">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Optimistic Scenario -->
+                            <div class="scenario-calculation optimistic-calc">
+                                <div class="calc-header">
+                                    <span class="calc-scenario-name">Optimistic Scenario (15% Annual)</span>
+                                </div>
+                                <div class="calc-steps">
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 1: Monthly Rate</span>
+                                        <span class="step-formula">15% ÷ 12 = 1.25%</span>
+                                        <span class="step-value" id="optimistic-monthly-rate">0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 2: Future Value</span>
+                                        <span class="step-formula">$0 × (1.0125)^60</span>
+                                        <span class="step-value" id="optimistic-future-value">$0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 3: Total Profit</span>
+                                        <span class="step-formula">$0 - $0</span>
+                                        <span class="step-value" id="optimistic-total-profit">$0</span>
+                                    </div>
+                                    <div class="calc-step">
+                                        <span class="step-label">Step 4: Net After Loan Costs</span>
+                                        <span class="step-formula">$0 - $0</span>
+                                        <span class="step-value" id="optimistic-net-profit">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="calculation-notes">
+                            <h4>📝 Important Notes</h4>
+                            <ul>
+                                <li>Calculations assume compound interest with monthly compounding</li>
+                                <li>Investment returns are not guaranteed and may vary</li>
+                                <li>Loan interest costs are fixed and must be paid regardless of investment performance</li>
+                                <li>This is a simplified model and doesn't account for taxes, fees, or market volatility</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- VOO Performance Data -->
+                    <div class="voo-info">
+                        <div class="voo-header">
+                            <h3>VOO ETF Performance Data</h3>
+                            <div class="voo-price">Current Price: <span id="voo-current-price">$542.18</span></div>
+                        </div>
+                        <div class="voo-metrics">
+                            <div class="voo-metric">
+                                <span class="voo-label">10-Year Average:</span>
+                                <span class="voo-value">11.8%</span>
+                            </div>
+                            <div class="voo-metric">
+                                <span class="voo-label">YTD 2025:</span>
+                                <span class="voo-value">18.2%</span>
+                            </div>
+                            <div class="voo-metric">
+                                <span class="voo-label">Dividend Yield:</span>
+                                <span class="voo-value">1.12%</span>
+                            </div>
+                            <div class="voo-metric">
+                                <span class="voo-label">Expense Ratio:</span>
+                                <span class="voo-value">0.03%</span>
+                            </div>
+                        </div>
+                        <div class="voo-disclaimer">
+                            <p><strong>Note:</strong> Past performance does not guarantee future results. Investment returns are not guaranteed and involve risk of loss.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons compact">
+                    <button class="btn btn-primary compact" id="calculate-btn">Calculate Loan</button>
+                    <button class="btn btn-secondary compact" id="reset-btn">Reset</button>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="disclaimer compact">
+                    <p>This calculator provides estimates. Actual loan terms may vary based on lender requirements and credit assessment.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Personal Loan & VOO Investment Calculator. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Calculation Detail Modal -->
+    <div id="calc-modal" class="calc-modal">
+        <div class="calc-modal-content">
+            <div class="calc-modal-header">
+                <h3 class="calc-modal-title">Detailed Investment Calculation</h3>
+                <button type="button" class="calc-modal-close" id="calc-modal-close">&times;</button>
+            </div>
+            <div class="calc-modal-body" id="calc-modal-body">
+                <!-- Content will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
